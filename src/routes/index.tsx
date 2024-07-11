@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PaymentMethodScreen } from '../screens/PaymentMethodScreen';
 import { DetailMethodScreen } from '../screens/DetailMethodScreen';
 import { PayScreen } from '../screens/PayScreen';
+import { PaymentConfirmedScreen } from '../screens/PaymentConfirmedScreen';
 
 
 export function PaymentRoutes(){
@@ -18,6 +19,7 @@ export function PaymentRoutes(){
             <Stack.Screen name="PaymentMethodScreen" component={PaymentMethodScreen}/>
             <Stack.Screen name="DetailMethodScreen" component={DetailMethodScreen}/>
             <Stack.Screen name="PayScreen" component={PayScreen}/>
+            <Stack.Screen name="PaymentConfirmedScreen" component={PaymentConfirmedScreen}/>
         </Stack.Navigator>
     );
 }
