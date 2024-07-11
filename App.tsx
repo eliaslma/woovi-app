@@ -3,6 +3,7 @@ import { useFonts } from 'expo-font';
 import { Loader } from './src/components/Loader';
 import { PaymentRoutes } from './src/routes';
 import { NavigationContainer } from '@react-navigation/native';
+import FlashMessage from 'react-native-flash-message';
 
 import {
     Nunito_400Regular,
@@ -30,6 +31,7 @@ export default function App() {
 
     return (
         <NavigationContainer>
+            <FlashMessage floating/>
             <StatusBar style='light' />
             <PaymentRoutes/>
         </NavigationContainer>
