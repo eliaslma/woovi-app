@@ -1,20 +1,39 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useFonts } from 'expo-font';
+import { Loader } from './src/components/Loader';
+import { PaymentRoutes } from './src/routes';
+import { NavigationContainer } from '@react-navigation/native';
+import FlashMessage from 'react-native-flash-message';
+
+import {
+    Nunito_400Regular,
+    Nunito_500Medium,
+    Nunito_600SemiBold,
+    Nunito_700Bold,
+    Nunito_800ExtraBold,
+} from '@expo-google-fonts/nunito'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    const [fontsLoaded] = useFonts({
+        Nunito_400Regular,
+        Nunito_500Medium,
+        Nunito_600SemiBold,
+        Nunito_700Bold,
+        Nunito_800ExtraBold
+    });
+
+    if (!fontsLoaded) {
+        return (
+            <Loader color="green" />
+        )
+    }
+
+    return (
+        <NavigationContainer>
+            <FlashMessage floating/>
+            <StatusBar style='light' />
+            <PaymentRoutes/>
+        </NavigationContainer>
+    );
+}
