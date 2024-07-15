@@ -1,10 +1,10 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { PixQuoteType } from "../../components/PaymentOptions";
+import { PixPaymentOption } from "../../types/PixPaymentOption";
 
 export type propsNavigatorStack = {
     PaymentMethodScreen: any;
-    DetailMethodScreen: PixQuoteType;
+    DetailMethodScreen: PixPaymentOption;
     PayScreen: any;
     PaymentConfirmedScreen: any;
 }

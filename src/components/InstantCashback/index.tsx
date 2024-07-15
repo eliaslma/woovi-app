@@ -6,7 +6,10 @@ import {
     LeftContainer,
     CashBackValueWrapper,
     Title,
-    CashBackValue
+    CashBackValue,
+    SemiCircle,
+    CashBackCenterValueWrapper,
+    SemiCircleRotated
 } from './styles';
 
 export function InstantCashback({ cashBackTotal }: { cashBackTotal: string }) {
@@ -17,8 +20,14 @@ export function InstantCashback({ cashBackTotal }: { cashBackTotal: string }) {
                 <Subtitle>O cashback instantâneo foi transferido para a sua chave Pix CPF: 053*******54</Subtitle>
             </LeftContainer>
             <CashBackValueWrapper>
+                <CashBackCenterValueWrapper>
+                <SemiCircle/>
                 <CashBackValue>{cashBackTotal}</CashBackValue>
+                <SemiCircleRotated/>
+                </CashBackCenterValueWrapper>
+                
             </CashBackValueWrapper>
+            
         </Container>
     );
 }

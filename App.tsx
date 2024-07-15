@@ -5,6 +5,16 @@ import { PaymentRoutes } from './src/routes';
 import { NavigationContainer } from '@react-navigation/native';
 import FlashMessage from 'react-native-flash-message';
 
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: false,
+    }),
+});
+
 import {
     Nunito_400Regular,
     Nunito_500Medium,
@@ -31,9 +41,9 @@ export default function App() {
 
     return (
         <NavigationContainer>
-            <FlashMessage floating/>
-            <StatusBar style='light' />
-            <PaymentRoutes/>
+            <FlashMessage floating />
+            <StatusBar style='dark' />
+            <PaymentRoutes />
         </NavigationContainer>
     );
 }

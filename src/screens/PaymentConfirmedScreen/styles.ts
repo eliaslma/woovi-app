@@ -21,11 +21,9 @@ export const ConfirmPaymentWrapper = styled.View`
     width: 100%;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
     padding: 0px 19px;
 `;
-
-export const ConfirmIcon = styled.Image``;
 
 export const PaymentWraper = styled.View`
     width: 100%;
@@ -56,5 +54,9 @@ export const CashBackTitle = styled.Text`
     color: #4D4D4D;
     font-size: ${RFValue(16)}px;
     font-family: 'Nunito_800ExtraBold';
+`;
 
+export const LineWrapper = styled.View`
+    width: 100%;
+    padding: 19px;
 `;

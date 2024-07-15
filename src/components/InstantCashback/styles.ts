@@ -22,12 +22,17 @@ export const Subtitle = styled.Text`
 `;
 
 export const CashBackValueWrapper = styled.View`
-    padding: 16px;
     background-color: #03D69D;
     border-radius: 10px;
     height: 100%;
     align-items: center;
     flex-direction: row;
+`;
+
+export const CashBackCenterValueWrapper = styled.View`
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
 `;
 
 export const CashBackValue = styled.Text`
@@ -39,4 +44,21 @@ export const Title = styled.Text`
     color: #4D4D4D;
     font-size: ${RFValue(10)}px;
     font-family: 'Nunito_800ExtraBold';
+`;
+
+export const SemiCircle = styled.View`
+  width: 7px; 
+  height: 10px; 
+  background-color: #FFFFFF; 
+  border-top-right-radius: 100px; 
+  border-bottom-right-radius: 100px;
+`;
+
+export const SemiCircleRotated = styled.View`
+  width: 7px; 
+  height: 10px; 
+  background-color: #FFFFFF; 
+  border-top-right-radius: 100px; 
+  border-bottom-right-radius: 100px;
+  transform: rotate(180deg);
 `;

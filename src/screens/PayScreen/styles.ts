@@ -27,7 +27,3 @@ export const CardSecurityWrapper = styled.View`
     flex-direction: row;
     gap: 22px;
 `;
-
-export const SelectQuote = styled.Text`
-text-align: center;
-`;

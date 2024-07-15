@@ -4,8 +4,11 @@
     "slug": "woovi-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/woovi.png",
     "userInterfaceStyle": "light",
+    "notification":{
+         "icon":"./assets/woovi.png"
+      },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -26,7 +29,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      ["expo-notifications", { "icon":"./assets/woovi.png"}]
     ]
   }
 }

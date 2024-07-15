@@ -3,16 +3,12 @@ import { useForm, Controller, FieldValues } from 'react-hook-form';
 import { TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native';
 import { ScreensTitle } from '../../components/ScreensTitle';
-import { Picker } from '@react-native-picker/picker';
 import { DefaultButton } from '../../components/DefaultButton';
-import { Overlay } from 'react-native-elements';
-import { QuotesList } from '../../components/QuotesList';
 import { ScrollView } from 'react-native';
-import { PaymentTerm } from '../../components/PaymentTerm';
-import { SecurityFooter } from '../../components/SecurityFooter';
-import { formatCPF, formatExpiration } from '../../utils/formUtils';
+import { SecurityFooter } from '../../components/molecules/SecurityFooter';
+import { formatCPF, formatCreditCardNumber, formatExpiration } from '../../utils/formUtils';
 import { propsNavigationStack } from '../../routes/Models';
-import { showMessage } from 'react-native-flash-message';
+import InstallmentOptionDetail from '../../components/templates/InstallmentOptionDetail';
 
 import {
     Container,
@@ -20,14 +16,9 @@ import {
     Logo,
     LogoWrapper,
     CardSecurityWrapper,
-    SelectQuote
 } from './styles';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { PixQuoteType } from '../../components/PaymentOptions';
-import { TotalQuotes } from '../../components/TotalQuotes';
-import { LineDivider } from '../../components/LineDivider';
-import { Identifier } from '../../components/Identifier';
 import { generateHash } from '../../utils/hashUtils';
 
 interface FormData extends FieldValues {
@@ -49,31 +40,20 @@ const textInputStyles = {
 export function PayScreen() {
 
     const route = useRoute();
-    const params = route.params as PixQuoteType;
+    const params = route.params as any;
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
-    const [quoteSelected, setQuoteSelected] = useState(`${params.quote - 1}x de ${params.quote_value}`);
+    const [quoteSelected, setQuoteSelected] = useState(`${params.installment.quote - 1}x de ${params.installment.quote_value}`);
     const [loading, setLoading] = useState<boolean>()
     const navigation = useNavigation<propsNavigationStack>();
-
     const hash = generateHash();
 
     const onSubmit = (data: FormData) => {
-
         setLoading(true);
 
         setTimeout(() => {
-            showMessage({
-                backgroundColor: '#03D69D',
-                message: "Já identificamos seu pagamento.",
-                description: "Pagamento via PIX realizado com sucesso!",
-                type: "success",
-                duration: 1500
-            });
-
-            navigation.navigate('PaymentConfirmedScreen', { total: params.total, hash, cashback: params.cashbackValue, name: data.name })
+            navigation.navigate('PaymentConfirmedScreen', { total: params.installment.total, hash, cashback: params.installment.cashback, name: data.name })
             setLoading(false);
         }, 1500);
-
     };
 
     const [visible, setVisible] = useState(false);
@@ -89,7 +69,7 @@ export function PayScreen() {
                     <LogoWrapper>
                         <Logo source={require('./../../../assets/woovi-logo.png')} />
                     </LogoWrapper>
-                    <ScreensTitle title={`Elias, pague o restante em ${params.quote - 1}x no ${'\n'} cartão`} />
+                    <ScreensTitle title={`Elias, pague o restante em ${params.installment.quote - 1}x no ${'\n'} cartão`} />
                     <FormWrapper>
                         <Controller
                             control={control}
@@ -141,7 +121,7 @@ export function PayScreen() {
                                     mode='outlined'
                                     label='Número do cartão'
                                     onBlur={onBlur}
-                                    onChangeText={onChange}
+                                    onChangeText={(text) => onChange(formatCreditCardNumber(text))}
                                     value={value}
                                     selectionColor={textInputStyles.selectionColor}
                                     activeOutlineColor={textInputStyles.activeOutlineColor}
@@ -210,26 +190,8 @@ export function PayScreen() {
                             underlineColor={textInputStyles.underlineColor}
                         />
                         <DefaultButton title="Pagar" onPress={handleSubmit(onSubmit)} isLoading={loading} disabled={loading} />
-                        <PaymentTerm />
                     </FormWrapper>
-                    {/* <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={{ borderRadius: 16 }}>
-                        <SelectQuote>Selecione uma parcela</SelectQuote>
-                        <Picker
-                            style={{ height: 200, width: 300 }}
-                            selectedValue={quoteSelected}
-                            onValueChange={(itemValue, itemIndex) =>
-                                setQuoteSelected(itemValue)
-                            }>
-                            {Array.from({ length: params.quote - 1 }).map((_, index) => (
-                                <Picker.Item key={index} label={`${index + 1}x de ${params.quote_value}`} value={`${index + 1}x de ${params.quote_value}`} />
-                            ))}
-                        </Picker>
-                    </Overlay> */}
-                    <QuotesList params={params} firstQuotePay={true} />
-                    <LineDivider />
-                    <TotalQuotes total={params.total} />
-                    <LineDivider />
-                    <Identifier hash={hash} />
+                    <InstallmentOptionDetail installment={params.installment} hash={params.hash} firstQuotePay={true} />
                     <SecurityFooter />
                 </ScrollView>
             </SafeAreaView>

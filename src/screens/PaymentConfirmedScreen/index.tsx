@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GoBackButton } from '../../components/GoBackButton';
+import * as Notifications from 'expo-notifications';
+import LottieView from 'lottie-react-native'
 
 import {
     Container,
     LogoWrapper,
     Logo,
-    ConfirmIcon,
     ConfirmPaymentWrapper,
     PaymentTitle,
     InfoPaymentContent,
     InfoPaymentTitle,
-    CashBackTitle
+    CashBackTitle,
+    LineWrapper
 } from './styles';
 
 import { useRoute } from '@react-navigation/native';
 import { getFormattedDate } from '../../utils/dateTimeUtils';
-import { LineDivider } from '../../components/LineDivider';
-import { SecurityFooter } from '../../components/SecurityFooter';
+import { LineDivider } from '../../components/atoms/LineDivider';
+import { SecurityFooter } from '../../components/molecules/SecurityFooter';
 import { InstantCashback } from '../../components/InstantCashback';
 
 interface ConfirmedAddressProps {
@@ -33,6 +35,25 @@ export function PaymentConfirmedScreen() {
     const route = useRoute();
     const params = route.params as ConfirmedAddressProps;
 
+    const callNotification = async () => {
+
+        if(params.cashback){
+            await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: "♾️ WooviBank",
+                    body: `Você recebeu um Pix de ${params.cashback} da Woovi 🤑`,
+                },
+                trigger: {
+                    seconds: 5
+                }
+            })
+        }
+    }
+
+    useEffect(() => {
+        callNotification();
+    },[])
+
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
             <Container>
@@ -41,7 +62,7 @@ export function PaymentConfirmedScreen() {
                         <Logo source={require('./../../../assets/woovi-logo.png')} />
                     </LogoWrapper>
                     <ConfirmPaymentWrapper>
-                        <ConfirmIcon source={require('./../../../assets/confirm.png')} />
+                        <LottieView autoPlay loop={false} style={{ width: '100%', height: 150}} source={require('../../../assets/checkbox-animation.json')}/>
                     </ConfirmPaymentWrapper>
                     <ConfirmPaymentWrapper>
                         <PaymentTitle>
@@ -64,7 +85,9 @@ export function PaymentConfirmedScreen() {
                         <InfoPaymentTitle>Identificador</InfoPaymentTitle>
                         <InfoPaymentContent>{params.hash}</InfoPaymentContent>
                     </ConfirmPaymentWrapper>
-                    <LineDivider />
+                    <LineWrapper>
+                        <LineDivider />
+                    </LineWrapper>
                     {params.cashback &&
                         <>
                             <ConfirmPaymentWrapper>
