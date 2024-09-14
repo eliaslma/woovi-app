@@ -51,7 +51,7 @@ const PaymentMethodDetails = () => {
             if (installment.quote === 1) {
                 handlePaymentSuccess('PaymentConfirmedScreen', { total: installment.total, hash, cashback: installment.cashbackValue }, 1500);
             } else {
-                handlePaymentSuccess('PayScreen', {installment, hash}, 3000, true);
+                handlePaymentSuccess('PayScreen', { installment, hash }, 3000, true);
             }
         }, 1500);
     };
